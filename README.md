@@ -21,7 +21,7 @@ This CTF challenge contains four different SQL injection vulnerabilities of incr
     ```
     docker-compose up --build
     ```
-3.  Access the application at http://localhost:5000
+3.  Access the application at http://localhost:8080
 
 ### Manual Setup
 
@@ -36,7 +36,7 @@ This CTF challenge contains four different SQL injection vulnerabilities of incr
     ```
     python app.py
     ```
-4.  Access the application at http://localhost:5000
+4.  Access the application at http://localhost:8080
 
 ## Challenge Objectives
 

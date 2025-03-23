@@ -1,8 +1,11 @@
 from flask import Flask, request, render_template, g
 import sqlite3
 import os
+from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
+
+bootstrap = Bootstrap5(app)  # Initialize Bootstrap
 
 # Database directory
 DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database')
@@ -194,4 +197,4 @@ def forgot_password():
     return render_template('forgot_password.html', message=message, message_class=message_class)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
