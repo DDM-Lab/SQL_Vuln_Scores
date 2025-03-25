@@ -20,7 +20,7 @@
     <thead class="table-dark">
         <tr>
             <th scope="col">Endpoint</th>
-            <th scope="col">Vulnerability Name</th>
+            <th scope="col">Vulnerability Location</th>
             <th scope="col">Description</th>
             <!-- Only show CVSS & Severity in treatment condition -->
             {% if condition == 1 %}
@@ -68,10 +68,10 @@
 </table>
 
 <div class="card mt-4">
-    <div class="card-header bg-dark text-white">
-        <h3>SQL Injection Tips</h3>
+    <div class="card-header bg-dark text-white" id="hintHeader" style="cursor: pointer;" onclick="toggleHints()">
+        <h3>Need a hint? <span class="float-end" id="toggleIcon">+</span></h3>
     </div>
-    <div class="card-body">
+    <div class="card-body" id="hintBody" style="display: none;">
         <ul>
             <li><code>' OR 1=1 --</code> to test if it is vulnerable</li>
             <li><code>' UNION SELECT sqlite_version() --</code> to verify which database type</li>
@@ -87,4 +87,19 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function toggleHints() {
+        const hintBody = document.getElementById('hintBody');
+        const toggleIcon = document.getElementById('toggleIcon');
+        
+        if (hintBody.style.display === 'none') {
+            hintBody.style.display = 'block';
+            toggleIcon.textContent = '−';  // Unicode minus sign
+        } else {
+            hintBody.style.display = 'none';
+            toggleIcon.textContent = '+';
+        }
+    }
+</script>
 {% endblock %}

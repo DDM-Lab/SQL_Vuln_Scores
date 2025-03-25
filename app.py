@@ -4,10 +4,22 @@ import os
 import random  # Add this import for randomization
 from flask_bootstrap import Bootstrap5
 from datetime import datetime
+import argparse
 
 app = Flask(__name__)
 app.secret_key = 'some_random_secret_key'  # Needed if you use session
 bootstrap = Bootstrap5(app)  # Initialize Bootstrap
+
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='SQL Injection Challenge Application')
+parser.add_argument('--treatment', action='store_true', help='Enable treatment condition')
+args = parser.parse_args()
+
+# Set condition based on arguments
+condition = 1 if args.treatment else 0
+
+# Get condition from environment variable
+condition = 1 if os.environ.get('TREATMENT', '').lower() in ('true', '1', 'yes') else 0
 
 # Database directory
 DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database')
@@ -108,55 +120,56 @@ def close_connection(exception):
 
 @app.route('/')
 def index():  
-    condition = TREATMENT
-
-    # Hard-coded “challenges” (vulnerabilities) with CVSS & severity
+    # Hard-coded "challenges" (vulnerabilities) with CVSS & severity
     # severity can be a short label like "High", "Medium", "Low"
     challenges = [
         {
             "id": 1,
             "endpoint": "/challenge1",
-            "name": "UNION-based Injection",
-            "description": "SQL injection vulnerability allowing extraction of data through UNION queries.",
-            "cvss": 8.2,
+            "name": "IT Department Endpoint",
+            "description": "Could we use the UNION operator?",
+            "cvss": round(random.uniform(6,7.99), 1),
             "severity": "High"
         },
         {
             "id": 2,
             "endpoint": "/challenge2",
-            "name": "Multi-Column UNION Injection",
-            "description": "Advanced SQL injection requiring matching multiple columns in UNION statements.",
-            "cvss": 7.8,
+            "name": "Root Credentials DB",
+            "description": "I wonder what happens if multiple columns are matched with the UNION operator...",
+            "cvss": round(random.uniform(8,10), 1),
             "severity": "Very High"
         },
         {
             "id": 3,
             "endpoint": "/challenge3",
-            "name": "UNION Injection with WHERE clause",
-            "description": "SQL injection in a search feature with filtering mechanisms.",
-            "cvss": 3.3,
+            "name": "Logs Endpoint",
+            "description": "WHERE could we possibly use this?",
+            "cvss": round(random.uniform(2,3.99), 1),
             "severity": "Low"
         },
         {
             "id": 4,
             "endpoint": "/challenge4",
-            "name": "Login Form SQL Injection",
-            "description": "Authentication bypass vulnerability in the login system.",
-            "cvss": 6.5,
+            "name": "Mailserver Endpoint",
+            "description": "If you forgot your password, could they tell you what it is?",
+            "cvss":  round(random.uniform(4,5.99), 1),
             "severity": "Medium"
         }
     ]
+    if condition is not TREATMENT:
+        random.shuffle(challenges)
+    else:
+        challenges = sorted(challenges, key=lambda x: x['cvss'], reverse=True)
 
-    random.shuffle(challenges)
     session['challenges'] = challenges
 
     # Optional: store condition in session if you want to keep it for the user
     session['condition'] = condition
 
-    # This text acts as a placeholder for “world building” or narrative.
+    # This text acts as a placeholder for "world building" or narrative.
     story_intro = (
-        "Welcome to MegaCorp’s Security Operations Challenge (CTF)!\n"
-        "In this scenario, you’ve been brought in to demonstrate the "
+        "Welcome to MegaCorp's Security Operations Challenge (CTF)!\n"
+        "In this scenario, you've been brought in to demonstrate the "
         "exploitation of potential vulnerabilities. Pick a vulnerability "
         "and attempt to exploit it."
     )
@@ -175,7 +188,6 @@ def select_challenge(challenge_id):
     """
     # In a real scenario, you'd have an actual participant ID
     participant_id = request.remote_addr  # e.g. just IP for demonstration
-    condition = TREATMENT
 
     # Find the chosen vulnerability name (in a real scenario, store them in DB)
     vulnerabilities = {
