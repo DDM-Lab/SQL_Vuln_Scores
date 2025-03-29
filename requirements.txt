@@ -1,1 +1,2 @@
-Flask
+Flask>=2.0.0
+Flask-Bootstrap5>=1.0.0
