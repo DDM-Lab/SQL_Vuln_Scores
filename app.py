@@ -1,10 +1,13 @@
 from flask import Flask, request, render_template, g, redirect, url_for, session
 import sqlite3
 import os
+import sys
 import random  # Add this import for randomization
 from flask_bootstrap import Bootstrap5
 from datetime import datetime
 import argparse
+
+DEFAULT_CONDITION = 1
 
 app = Flask(__name__)
 app.secret_key = 'some_random_secret_key'  # Needed if you use session
@@ -15,18 +18,18 @@ parser = argparse.ArgumentParser(description='SQL Injection Challenge Applicatio
 parser.add_argument('--treatment', action='store_true', help='Enable treatment condition')
 args = parser.parse_args()
 
-# Set condition based on arguments
-condition = 1 if args.treatment else 0
-
-# Get condition from environment variable
-condition = 1 if os.environ.get('TREATMENT', '').lower() in ('true', '1', 'yes') else 0
-
+if '--treatment' in sys.argv:
+    condition = 1
+elif os.environ.get('TREATMENT', '').lower() in ('true', '1', 'yes'):
+    condition = 1
+else:
+    condition = DEFAULT_CONDITION
+    
 # Database directory
 DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database')
 if not os.path.exists(DB_DIR):
     os.makedirs(DB_DIR)
 
-TREATMENT = 1
 
 def format_qualtrics_data(qualtrics_data):
     """Format just the data portion of the qualtrics display"""
@@ -37,7 +40,7 @@ def format_qualtrics_data(qualtrics_data):
 
 def generate_qualtrics_data(problem):
     return {
-        'condition': 1 if TREATMENT else 0,
+        'condition': condition,
         "problem": problem
     }
 
@@ -98,7 +101,7 @@ def init_dbs():
     conn.close()
 
     qualtrics_data = {
-            'condition': 1 if TREATMENT else 0
+            'condition': condition
         }
 
 init_dbs()
@@ -156,7 +159,7 @@ def index():
             "severity": "Medium"
         }
     ]
-    if condition is not TREATMENT:
+    if condition is not 1:
         random.shuffle(challenges)
     else:
         challenges = sorted(challenges, key=lambda x: x['cvss'], reverse=True)
