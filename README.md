@@ -23,20 +23,6 @@ This CTF challenge contains four different SQL injection vulnerabilities of incr
     ```
 3.  Access the application at http://localhost:8080
 
-### Manual Setup
-
-1.  Clone this repository
-2.  Install the required dependencies:
-
-    ```
-    pip install flask
-    ```
-3.  Run the application:
-
-    ```
-    python app.py
-    ```
-4.  Access the application at http://localhost:8080
 
 ## Challenge Objectives
 
