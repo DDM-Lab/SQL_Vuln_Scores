@@ -40,14 +40,5 @@ For each challenge, your goal is to:
 *   Get column information with `' UNION SELECT sql FROM sqlite_master WHERE tbl_name='tablename' --`
 *   Determine column count with `' ORDER BY 1--`, `' ORDER BY 2--`, etc. until you get an error
 
-## CVSS Scores
-
-Each vulnerability has been assigned a CVSS score to indicate its severity:
-
-*   Challenge 1: 6.5
-*   Challenge 2: 7.8
-*   Challenge 3: 6.3
-*   Challenge 4: 8.2
-
 ## Solutions
 The solutions have been provided. Please check the solutions.txt file
