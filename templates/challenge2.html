@@ -18,15 +18,9 @@
         <h4 class="mb-0">IMPORTANT: Study Compensation Information</h4>
     </div>
     <div class="card-body">
-        <div class="alert alert-danger mb-3">
-            <strong>Copy the text below to Qualtrics to get compensation for this challenge.</strong>
-        </div>
-        
-        <pre class="bg-light p-3 border rounded">{{ qualtrics_data }}</pre>
-        
-        <div class="alert alert-danger mt-3">
-            <strong>Copy the text above to Qualtrics to get compensation for this challenge.</strong>
-        </div>
+        <a href="{{ url_for('download_qualtrics', problem='challenge2') }}" class="btn btn-primary mt-3">
+            Download Qualtrics Data
+        </a>
     </div>
 </div>
 {% endif %}

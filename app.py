@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, g, redirect, url_for, session
+from flask import Flask, request, render_template, g, redirect, url_for, session, send_file
 import sqlite3
 import os
 import sys
@@ -6,6 +6,8 @@ import random  # Add this import for randomization
 from flask_bootstrap import Bootstrap5
 from datetime import datetime
 import argparse
+from io import StringIO, BytesIO
+
 
 DEFAULT_CONDITION = 1
 
@@ -213,6 +215,32 @@ def select_challenge(challenge_id):
 
     # Redirect user to the chosen challenge or somewhere else
     return redirect(url_for(f'challenge{challenge_id}'))
+
+@app.route('/download_qualtrics')
+def download_qualtrics():
+    # Get the problem identifier from the query string; default to "unknown problem" if not provided.
+    problem = request.args.get("problem", "unknown problem")
+    qualtrics_data = generate_qualtrics_data(problem)
+    
+    # Format the data as a string.
+    output_text = "Upload this file to Qualtrics to get compensation for this challenge.\n"
+    output_text += "--- Study Data ---\n"
+    for key, value in qualtrics_data.items():
+        output_text += f"{key}: {value}\n"
+    
+    # Use BytesIO to create an in-memory binary file-like object.
+    file_obj = BytesIO()
+    file_obj.write(output_text.encode('utf-8'))
+    file_obj.seek(0)  # Reset pointer to the beginning
+    
+    # Send the file as an attachment using the new keyword 'download_name'
+    return send_file(
+        file_obj,
+        as_attachment=True,
+        download_name="qualtrics_data.txt",
+        mimetype="text/plain"
+    )
+
 
 # Challenge 1: Basic UNION-based Injection
 @app.route('/challenge1', methods=['GET', 'POST'])
