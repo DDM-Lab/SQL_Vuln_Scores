@@ -232,7 +232,7 @@ def challenge2():
     result = None
     if request.method == 'POST':
         product_id = request.form.get('product_id')
-        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = {product_id}"
+        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = '{product_id}'"
         db = get_db('inventory')
         try:
             cur = db.execute(query)
