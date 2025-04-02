@@ -237,7 +237,7 @@ def download_qualtrics():
     return send_file(
         file_obj,
         as_attachment=True,
-        download_name="qualtrics_data.txt",
+        download_name="sql_challenge.txt",
         mimetype="text/plain"
     )
 
