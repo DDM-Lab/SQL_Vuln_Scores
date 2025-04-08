@@ -7,6 +7,11 @@ from flask_bootstrap import Bootstrap5
 from datetime import datetime
 import argparse
 from io import StringIO, BytesIO
+import logging
+
+# Add at the start of your file, after the other imports
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_CONDITION = 1
@@ -161,7 +166,7 @@ def index():
             "severity": "Medium"
         }
     ]
-    if condition is not 1:
+    if condition != 1:
         random.shuffle(challenges)
     else:
         challenges = sorted(challenges, key=lambda x: x['cvss'], reverse=True)
@@ -246,33 +251,50 @@ def download_qualtrics():
 @app.route('/challenge1', methods=['GET', 'POST'])
 def challenge1():
     result = None
+    qualtrics_data = None
     if request.method == 'POST':
-        username = request.form.get('username')
-        query = f"SELECT username FROM users WHERE username = '{username}'"
-        db = get_db('main')
-        cur = db.execute(query)
-        result = cur.fetchall()
-    return render_template('challenge1.html', result=result, qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 1")))
+        try:
+            username = request.form.get('username')
+            query = f"SELECT username FROM users WHERE username = '{username}'"
+            logger.info(f"Query: {query}")
+            db = get_db('main')
+            cur = db.execute(query)
+            result = cur.fetchall()
+            logger.info(f"Result: {result}")
+        except sqlite3.Error as e:
+            logger.info(f"Error: {str(e)}")
+            result = [f"Error: {str(e)}"]
+        if any('picoCTF' in str(row) for row in result):
+            qualtrics_data = format_qualtrics_data(generate_qualtrics_data("problem 1"))
+    return render_template('challenge1.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 2: Multi-Column UNION Injection
 @app.route('/challenge2', methods=['GET', 'POST'])
 def challenge2():
     result = None
+    qualtrics_data = None
     if request.method == 'POST':
         product_id = request.form.get('product_id')
-        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = '{product_id}'"
+        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = {product_id}"
+        logger.info(f"Query: {query}")
         db = get_db('inventory')
         try:
             cur = db.execute(query)
             result = cur.fetchall()
+            logger.info(f"Result: {result}")
+            # Check if any row in the result contains 'picoCTF'
+            if any('picoCTF' in str(row) for row in result):
+                qualtrics_data = format_qualtrics_data(generate_qualtrics_data("problem 2"))
         except sqlite3.Error as e:
+            logger.info(f"Error: {str(e)}")
             result = [f"Error: {str(e)}"]
-    return render_template('challenge2.html', result=result, qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 2")))
+    return render_template('challenge2.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 3: UNION Injection with WHERE clause
 @app.route('/challenge3', methods=['GET', 'POST'])
 def challenge3():
     result = None
+    qualtrics_data = None
     if request.method == 'POST':
         author = request.form.get('author', '')
         query = f"SELECT title, author FROM books WHERE author = '{author}'"
@@ -280,16 +302,19 @@ def challenge3():
         try:
             cur = db.execute(query)
             result = cur.fetchall()
+            logger.info(f"Result: {result}")
         except sqlite3.Error as e:
             result = [f"Error: {str(e)}"]
-    return render_template('challenge3.html', result=result, qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 3")))
+        if any('picoCTF' in str(row) for row in result):
+            qualtrics_data = format_qualtrics_data(generate_qualtrics_data("problem 3"))
+    return render_template('challenge3.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 4: Login Form
 @app.route('/challenge4', methods=['GET', 'POST'])
 def challenge4():
     message = ''
     message_class = ''
-    
+    qualtrics_data = None
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -305,12 +330,14 @@ def challenge4():
             flag_query = "SELECT flag FROM flags WHERE id = 1"
             cur = db.execute(flag_query)
             flag_result = cur.fetchone()
-            return render_template('challenge4_success.html', flag=flag_result[0], qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 4")))
+            if 'picoCTF' in flag_result:
+                qualtrics_data = format_qualtrics_data(generate_qualtrics_data("problem 4"))
+            return render_template('challenge4_success.html', flag=flag_result[0], qualtrics_data=qualtrics_data)
         else:
             message = "Invalid credentials"
             message_class = "danger"
 
-    return render_template('challenge4.html', message=message, message_class=message_class, qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 4")))
+    return render_template('challenge4.html', message=message, message_class=message_class, qualtrics_data=qualtrics_data)
 
 @app.route('/challenge4/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
@@ -338,7 +365,7 @@ def forgot_password():
             message = f"Error: {str(e)}"
             message_class = "danger"
 
-    return render_template('forgot_password.html', message=message, message_class=message_class, qualtrics_data=format_qualtrics_data(generate_qualtrics_data("problem 4")))
+    return render_template('forgot_password.html', message=message, message_class=message_class, qualtrics_data=None)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

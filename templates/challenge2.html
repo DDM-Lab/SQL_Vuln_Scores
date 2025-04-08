@@ -8,11 +8,13 @@
     <input type="text" name="product_id" class="form-control" placeholder="Enter product ID">
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 </form>
+
 {% if result %}
 <div class="alert">
     <h3>Output: {{ result }}</h3>
 </div>
-
+{% endif %}
+{% if qualtrics_data %}
 <div class="card mt-1 border-danger">
     <div class="card-header bg-danger text-white">
         <h4 class="mb-0">IMPORTANT: Study Compensation Information</h4>
