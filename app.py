@@ -275,7 +275,7 @@ def challenge2():
     qualtrics_data = None
     if request.method == 'POST':
         product_id = request.form.get('product_id')
-        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = {product_id}"
+        query = f"SELECT item_name, quantity, category FROM inventory WHERE id = '{product_id}'"
         logger.info(f"Query: {query}")
         db = get_db('inventory')
         try:
