@@ -61,7 +61,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'secret_pass1234')")
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{MAIN-DB-12345}')")
+    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{MAIN-DB-SQL-12345}')")
     conn.commit()
     conn.close()
 
