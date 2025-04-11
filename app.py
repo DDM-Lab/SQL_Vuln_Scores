@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-DEFAULT_CONDITION = 1
+DEFAULT_CONDITION = 0
 
 app = Flask(__name__)
 app.secret_key = 'some_random_secret_key'  # Needed if you use session
