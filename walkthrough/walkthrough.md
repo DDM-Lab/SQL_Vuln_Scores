@@ -1,10 +1,13 @@
 # Introduction
 
-The goal of this problem set is to expose participants to (SQL injection vulnerabilities)[https://owasp.org/www-community/attacks/SQL_Injection].
+The goal of this problem set is to expose participants to [SQL injection vulnerabilities](https://owasp.org/www-community/attacks/SQL_Injection).
 
 SQL injections can occur in online web applications that do not perform sanitization on user inputs. That means, when you create a form in a web application (such as a username and password login), you should be mindful on how the operations you perform with the user's input are used in the rest of your code.
 
 Each challenge below, has a slightly different vulnerability.
+
+*You only need to complete one of the challenges but choose wisely.*
+
 
 ## Challenge 1 (IT Department)
 
