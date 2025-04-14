@@ -19,7 +19,7 @@ ENV TREATMENT=false
 
 EXPOSE 8080
 
-ENTRYPOINT ["python", "app.py"]
+ENTRYPOINT ["python", "app.py","--treatment"]
 
 # Default command (can be overridden)
 CMD []
