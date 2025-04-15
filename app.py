@@ -61,7 +61,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'secret_pass1234')")
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{M41N_DB_SQL_1NJ3CT10N}')")
+    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -76,7 +76,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS hidden_flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO inventory VALUES (1, 'USB Cable', 50, 'Electronics')")
-    c.execute("INSERT OR IGNORE INTO hidden_flags VALUES (1, 'picoCTF{1NV3NTORY_DB_UNION_4774CK}')")
+    c.execute("INSERT OR IGNORE INTO hidden_flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -91,7 +91,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS flags (
                      id INTEGER PRIMARY KEY, 
                      flag TEXT)''')
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{L0G1N_F0RM_SQL_3XPLO1T}')")
+    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -103,7 +103,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS library_secrets
                  (id INTEGER PRIMARY KEY, secret_code TEXT)''')
     c.execute("INSERT OR IGNORE INTO books VALUES (1, 'The Great Gatsby', 'F. Scott Fitzgerald')")
-    c.execute("INSERT OR IGNORE INTO library_secrets VALUES (1, 'picoCTF{L1BR4RY_DB_S3CR3T_C0DE}')")
+    c.execute("INSERT OR IGNORE INTO library_secrets VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
