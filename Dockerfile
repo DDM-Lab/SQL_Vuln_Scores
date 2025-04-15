@@ -15,12 +15,11 @@ RUN pip install bootstrap-flask
 
 RUN mkdir -p /app/database
 
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-ENV TREATMENT=false
-
 EXPOSE 8080
+# The comment below is parsed by cmgr. You can reference the port by the name
+# given, but if there is only one port published, you don't have to use the name
+# PUBLISH 8080 AS web
+
 
 CMD ["python", "app.py","--treatment"]
 
