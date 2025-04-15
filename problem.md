@@ -1,7 +1,7 @@
 # Web CSS
 
-- Namespace: picoctf/examples
-- ID: web-css
+- Namespace: picoctf/research
+- ID: sqli-scores
 - Type: custom
 - Category: Web Exploitation
 - Points: 1
@@ -10,7 +10,7 @@
 
 ## Description
 
-Do you know how to use the web inspector?
+There are various endpoints vulnerable to SQL Injection. Can you exploit them?
 
 ## Details
 
@@ -18,12 +18,11 @@ Browse {{link_as('/', 'here')}}, and find the flag!
 
 ## Hints
 
-- Use the web inspector to find other files included by the web page.
+- Look at the hints on the Home page
 
 ## Solution Overview
 
-Inspect the landing page to find the css file. Open the css file to find the
-flag.
+Figure out the DB structure, appropriate table and retrieve the flag.
 
 ## Challenge Options
 
@@ -39,14 +38,14 @@ init: true
 
 ## Learning Objective
 
-Usage of web inspector
+Understand SQL Injection
 
 ## Tags
 
-- example
+- web
 
 ## Attributes
 
-- author: LT 'syreal' Jones
+- author: DDM Lab
 - organization: picoCTF
-- event: picoCTF Problem Developer Training
+- event: DDM LAB Research

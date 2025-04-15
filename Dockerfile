@@ -8,7 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 RUN mkdir /challenge && chmod 700 /challenge
-RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
+# RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
+RUN echo "{\"flag\":\"$(cat flag.txt)\"}" > /challenge/metadata.json
 
 RUN pip install --no-cache-dir flask
 RUN pip install bootstrap-flask
