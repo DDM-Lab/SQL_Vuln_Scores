@@ -7,6 +7,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN mkdir /challenge && chmod 700 /challenge
+RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
+
 RUN pip install --no-cache-dir flask
 RUN pip install bootstrap-flask
 
@@ -19,7 +22,5 @@ ENV TREATMENT=false
 
 EXPOSE 8080
 
-ENTRYPOINT ["python", "app.py","--treatment"]
+CMD ["python", "app.py","--treatment"]
 
-# Default command (can be overridden)
-CMD []
