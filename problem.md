@@ -1,4 +1,4 @@
-# Web SQLi
+# SQL_VULN_SCORES
 
 - Namespace: picoctf/research
 - ID: sqli-scores
