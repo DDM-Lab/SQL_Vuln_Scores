@@ -8,6 +8,11 @@ Each challenge below, has a slightly different vulnerability.
 
 *You only need to complete one of the challenges but choose wisely.*
 
+*Don't forget to:*
+
+1. Upload `sql_challenge.txt` to Qualtrics to receive credit for completing the challenge.
+2. Submit the flag to Qualtrics.
+
 
 ## Challenge 1 (IT Department)
 
@@ -24,7 +29,9 @@ What's happening:
 
 Effect: This tricks the database into returning the flag instead of normal data.
 
-## Challenge 2 (Root Crdentials DB)
+
+
+## Challenge 2 (Root Credentials DB)
 ```
 ' UNION SELECT flag, NULL, NULL FROM hidden_flags --
 ```
@@ -37,7 +44,7 @@ What’s happening:
 
 Effect: It returns the flag from `hidden_flags`, aligning with the expected column structure.
 
-## Challenge 3 (Logs Endpoint)
+## Challenge 3 
 
 ```
 ' UNION SELECT secret_code, NULL FROM library_secrets --
@@ -46,7 +53,7 @@ Effect: It returns the flag from `hidden_flags`, aligning with the expected colu
 What's happening:
 
 - Similar to Challenge 2, but with only 2 columns this time.
-- `library_secret`s contains a `secret_code` the attacker wants to extract.
+- `library_secrets` contains a `secret_code` the attacker wants to extract.
 - The second `NULL` ensures the column count matches the original query.
 
 Effect: The query returns `secret_code` values instead of normal logs.
@@ -66,6 +73,8 @@ What’s happening:
 - `UNION SELECT` password pulls the admin’s password.
 - `WHERE username='admin'` targets a specific user.
 - `--` ignores anything after.
+
+
 
 # Other Resources
 
