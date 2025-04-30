@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, g, redirect, url_for, session
 import sqlite3
 import os
 import sys
-import random  # Add this import for randomization
+import random  
 from flask_bootstrap import Bootstrap5
 from datetime import datetime
 import argparse
@@ -61,7 +61,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'secret_pass1234')")
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{MAIN-DB-SQL-12345}')")
+    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -76,7 +76,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS hidden_flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO inventory VALUES (1, 'USB Cable', 50, 'Electronics')")
-    c.execute("INSERT OR IGNORE INTO hidden_flags VALUES (1, 'picoCTF{INVENTORY-DB-ABCDE}')")
+    c.execute("INSERT OR IGNORE INTO hidden_flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -91,7 +91,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS flags (
                      id INTEGER PRIMARY KEY, 
                      flag TEXT)''')
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{CHALLENGE4-LOGIN}')")
+    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 
@@ -103,7 +103,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS library_secrets
                  (id INTEGER PRIMARY KEY, secret_code TEXT)''')
     c.execute("INSERT OR IGNORE INTO books VALUES (1, 'The Great Gatsby', 'F. Scott Fitzgerald')")
-    c.execute("INSERT OR IGNORE INTO library_secrets VALUES (1, 'picoCTF{LIBRARY-DB-BOOKWORM}')")
+    c.execute("INSERT OR IGNORE INTO library_secrets VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
     conn.commit()
     conn.close()
 

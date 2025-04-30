@@ -7,23 +7,20 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN mkdir /challenge && chmod 700 /challenge
+# RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
+RUN echo "{\"flag\":\"$(cat flag.txt)\"}" > /challenge/metadata.json
+
 RUN pip install --no-cache-dir flask
 RUN pip install bootstrap-flask
 
-# Create directory for databases
 RUN mkdir -p /app/database
 
-# Set environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Set default environment variable
-ENV TREATMENT=false
-
 EXPOSE 8080
+# The comment below is parsed by cmgr. You can reference the port by the name
+# given, but if there is only one port published, you don't have to use the name
+# PUBLISH 8080 AS web
 
-# Define entrypoint script to handle arguments
-ENTRYPOINT ["python", "app.py"]
 
-# Default command (can be overridden)
-CMD []
+CMD ["python", "app.py","--treatment"]
+
