@@ -1,11 +1,18 @@
 FROM python:3.9-slim
 
+RUN apt-get update && apt-get install -y sqlite3
+
 WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+ARG SEED
+ENV SEED=${SEED}
+ARG FLAG
+ENV FLAG=${FLAG}
 
 RUN mkdir /challenge && chmod 700 /challenge
 # RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
@@ -15,6 +22,8 @@ RUN pip install --no-cache-dir flask
 RUN pip install bootstrap-flask
 
 RUN mkdir -p /app/database
+
+RUN python setup_challenge.py
 
 EXPOSE 8080
 # The comment below is parsed by cmgr. You can reference the port by the name

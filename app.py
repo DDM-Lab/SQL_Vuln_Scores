@@ -8,11 +8,15 @@ from datetime import datetime
 import argparse
 from io import StringIO, BytesIO
 import logging
+import json
 
 # Add at the start of your file, after the other imports
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+with open("/challenge/metadata.json", "r") as f:
+    metadata_flag = json.load(f)
+FLAG = metadata_flag['flag']
 
 DEFAULT_CONDITION = 0
 
@@ -60,8 +64,8 @@ def init_dbs():
                  (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
-    c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'secret_pass1234')")
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
+    c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'very_secret_IT_pass1234')")
+    c.execute(f"INSERT OR IGNORE INTO flags VALUES (1, '{FLAG}')")
     conn.commit()
     conn.close()
 
@@ -76,7 +80,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS hidden_flags
                  (id INTEGER PRIMARY KEY, flag TEXT)''')
     c.execute("INSERT OR IGNORE INTO inventory VALUES (1, 'USB Cable', 50, 'Electronics')")
-    c.execute("INSERT OR IGNORE INTO hidden_flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
+    c.execute(f"INSERT OR IGNORE INTO hidden_flags VALUES (1, '{FLAG}')")
     conn.commit()
     conn.close()
 
@@ -87,11 +91,11 @@ def init_dbs():
                      id INTEGER PRIMARY KEY, 
                      username TEXT, 
                      password TEXT)''')
-    c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'admin_pa$$')")
+    c.execute("INSERT OR IGNORE INTO users VALUES (1, 'admin', 'the_best_mailserver_pass')")
     c.execute('''CREATE TABLE IF NOT EXISTS flags (
                      id INTEGER PRIMARY KEY, 
                      flag TEXT)''')
-    c.execute("INSERT OR IGNORE INTO flags VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
+    c.execute(f"INSERT OR IGNORE INTO flags VALUES (1, '{FLAG}')")
     conn.commit()
     conn.close()
 
@@ -103,7 +107,7 @@ def init_dbs():
     c.execute('''CREATE TABLE IF NOT EXISTS library_secrets
                  (id INTEGER PRIMARY KEY, secret_code TEXT)''')
     c.execute("INSERT OR IGNORE INTO books VALUES (1, 'The Great Gatsby', 'F. Scott Fitzgerald')")
-    c.execute("INSERT OR IGNORE INTO library_secrets VALUES (1, 'picoCTF{SQL_3XPLO1T_UNION_4774CK}')")
+    c.execute(f"INSERT OR IGNORE INTO library_secrets VALUES (1, '{FLAG}')")
     conn.commit()
     conn.close()
 
@@ -144,7 +148,7 @@ def index():
         {
             "id": 2,
             "endpoint": "/challenge2",
-            "name": "Root Credentials DB",
+            "name": "Inventory DB",
             "description": "I wonder what happens if multiple columns are matched with the UNION operator...",
             "cvss": round(random.uniform(8,10), 1),
             "severity": "Very High"
@@ -152,7 +156,7 @@ def index():
         {
             "id": 3,
             "endpoint": "/challenge3",
-            "name": "Logs Endpoint",
+            "name": "Library Endpoint",
             "description": "WHERE could we possibly use this?",
             "cvss": round(random.uniform(2,3.99), 1),
             "severity": "Low"
@@ -248,6 +252,7 @@ def download_qualtrics():
 
 
 # Challenge 1: Basic UNION-based Injection
+# IT Department Endpoint
 @app.route('/challenge1', methods=['GET', 'POST'])
 def challenge1():
     result = None
@@ -269,6 +274,7 @@ def challenge1():
     return render_template('challenge1.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 2: Multi-Column UNION Injection
+# Inventory DB
 @app.route('/challenge2', methods=['GET', 'POST'])
 def challenge2():
     result = None
@@ -291,6 +297,7 @@ def challenge2():
     return render_template('challenge2.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 3: UNION Injection with WHERE clause
+# Logs Endpoint
 @app.route('/challenge3', methods=['GET', 'POST'])
 def challenge3():
     result = None
@@ -310,6 +317,7 @@ def challenge3():
     return render_template('challenge3.html', result=result, qualtrics_data=qualtrics_data)
 
 # Challenge 4: Login Form
+# Mailserver Endpoint
 @app.route('/challenge4', methods=['GET', 'POST'])
 def challenge4():
     message = ''
