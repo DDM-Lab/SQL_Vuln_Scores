@@ -1,7 +1,7 @@
 # Pick your SQL exploit
 
 - Namespace: picoctf/research
-- ID: sqli-scores-treatment
+- ID: sqli-scores-control
 - Type: custom
 - Category: Web Exploitation
 - Points: 1
@@ -53,4 +53,4 @@ Understand SQL Injection
 
 - author: DDM Lab
 - organization: picoCTF
-- event: picoCTF Experimental Problems 1
+- event: picoCTF Experimental Problems 2

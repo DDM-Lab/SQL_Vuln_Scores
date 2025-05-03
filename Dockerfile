@@ -29,5 +29,5 @@ EXPOSE 8080
 # PUBLISH 8080 AS web
 
 
-CMD ["python", "app.py","--treatment"]
+CMD ["python", "app.py"]
 
