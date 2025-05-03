@@ -19,7 +19,7 @@ else:
     flag_rand = flag_rand.group()
     flag_rand = flag_rand[1:-1]
 
-new_flag = new_flag = "picoCTF{SQL_3XPLO1T_UNION_4774CK_" + flag_rand + "}"
+new_flag = new_flag = "picoCTF{SQL_UNION_4774CK_" + flag_rand + "}"
 
 metadata = {"flag": new_flag}
 

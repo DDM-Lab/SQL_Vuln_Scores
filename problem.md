@@ -1,4 +1,4 @@
-# SQL_VULN_SCORES
+# Pick your SQL exploit
 
 - Namespace: picoctf/research
 - ID: sqli-scores-treatment

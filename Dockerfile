@@ -15,8 +15,6 @@ ARG FLAG
 ENV FLAG=${FLAG}
 
 RUN mkdir /challenge && chmod 700 /challenge
-# RUN echo "{\"flag\":\"$(cat /root/flag.txt)\"}" > /challenge/metadata.json
-RUN echo "{\"flag\":\"$(cat flag.txt)\"}" > /challenge/metadata.json
 
 RUN pip install --no-cache-dir flask
 RUN pip install bootstrap-flask

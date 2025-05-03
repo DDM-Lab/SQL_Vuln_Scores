@@ -10,6 +10,8 @@ from io import StringIO, BytesIO
 import logging
 import json
 
+seed = os.environ.get("SEED")
+
 # Add at the start of your file, after the other imports
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -21,7 +23,7 @@ FLAG = metadata_flag['flag']
 DEFAULT_CONDITION = 0
 
 app = Flask(__name__)
-app.secret_key = 'some_random_secret_key'  # Needed if you use session
+app.secret_key = str(seed) # Needed if you use session
 bootstrap = Bootstrap5(app)  # Initialize Bootstrap
 
 # Parse command line arguments
