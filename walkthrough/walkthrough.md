@@ -1,3 +1,4 @@
+# CTF Challenge: Pick your SQL exploit
 # Introduction
 
 The goal of this problem set is to expose participants to [SQL injection vulnerabilities](https://owasp.org/www-community/attacks/SQL_Injection).
